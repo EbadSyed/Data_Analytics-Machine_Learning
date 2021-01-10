@@ -34,3 +34,43 @@ sortrows
 ## Mean and Standard Deviation
 ![mean](part1/mean.png)
 
+# Signal Processing
+
+## Signal Generation
+![signals](part2/signals.png)
+
+## Power Spectrum
+
+```
+% Compute the Fourier transform of the signals.
+Y = fft(Signal,n);
+
+% Calculate the double-sided spectrum
+P2 = abs(Y/L);
+
+% Calculate the single-sided spectrum
+P1 = P2(:,1:n/2+1);
+P1(:,2:end-1) = 2*P1(:,2:end-1);
+```
+![image](part2/power.png)
+
+## Resampling
+![image](part2/resample.png)
+
+# ECG Signal Processing
+
+## Filtering
+```
+smoothECG = sgolayfilt(ecgsignal,7,21);
+```
+
+## QRS Detection
+```[~,locs_Rwave] = findpeaks(smoothECG,'MinPeakHeight',0.2,'MinPeakDistance',100);
+[~,locs_Swave] = findpeaks(-smoothECG,'MinPeakHeight',0.08,'MinPeakDistance',100);
+[~,locs_Qwave] = findpeaks(-smoothECG,'MinPeakDistance',40);
+locs_Qwave = locs_Qwave(smoothECG(locs_Qwave)>-0.066 & smoothECG(locs_Qwave)<1);
+```
+![image](part2/QRS.png)
+
+
+
