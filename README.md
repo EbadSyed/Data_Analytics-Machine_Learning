@@ -65,12 +65,28 @@ smoothECG = sgolayfilt(ecgsignal,7,21);
 ```
 
 ## QRS Detection
-```[~,locs_Rwave] = findpeaks(smoothECG,'MinPeakHeight',0.2,'MinPeakDistance',100);
+```
+[~,locs_Rwave] = findpeaks(smoothECG,'MinPeakHeight',0.2,'MinPeakDistance',100);
 [~,locs_Swave] = findpeaks(-smoothECG,'MinPeakHeight',0.08,'MinPeakDistance',100);
 [~,locs_Qwave] = findpeaks(-smoothECG,'MinPeakDistance',40);
 locs_Qwave = locs_Qwave(smoothECG(locs_Qwave)>-0.066 & smoothECG(locs_Qwave)<1);
 ```
 ![image](part2/QRS.png)
 
+# Wavelet Analysis
 
+## Bandpass Filter
+![image](part3/bandpass.png)
+
+## Wavelet
+```
+[cfs,frq] = cwt(Signal,Fs);
+tms = (0:numel(Signal)-1)/Fs;
+```
+
+### Scalogram Plot for Wavelet Analysis
+![image](part3/scalogram.png)
+
+### Morlet Wavelet Analysis for Local Field Potential
+![image](part3/lfp.png)
 
